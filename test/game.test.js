@@ -55,25 +55,17 @@ describe('Game', function () {
         expect(game.takeAShot(indexes[0])).toBe("nextlevel");
     });
 
-    it('should increase level after successful shot', function () {
-        var indexes;
-        game.startGame();
-        indexes = findIndexesOfPiecesToGuess(game.getPieces());
-        game.takeAShot(indexes[0])
-        expect(game.getLevel()).toBe(2);
-    });
-
     it('should return a gameover status after unsuccessful shot', function () {
         var indexes,
-            successfullShotIndex,
+            successfulShotIndex,
             testShotIndex;
         game.startGame();
         indexes = findIndexesOfPiecesToGuess(game.getPieces());
-        successfullShotIndex = indexes[0];
-        if(successfullShotIndex === 0){
+        successfulShotIndex = indexes[0];
+        if(successfulShotIndex === 0){
             testShotIndex = 1;
         } else {
-            testShotIndex = successfullShotIndex - 1;
+            testShotIndex = successfulShotIndex - 1;
         }
         expect(game.takeAShot(testShotIndex)).toBe("gameover");
     });

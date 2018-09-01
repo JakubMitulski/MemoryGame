@@ -1,13 +1,13 @@
-.lockedPiece{
+.lockedPiece {
     width: 50px;
     height: 50px;
     background-color: darkgrey;
     margin: 2px;
     display: inline-block;
-    pointer-events:none;
+    pointer-events: none;
 }
 
-.unlockedPiece{
+.regularPiece {
     width: 50px;
     height: 50px;
     background-color: darkgrey;
@@ -15,11 +15,37 @@
     display: inline-block;
 }
 
-.pieceToGuess{
+.pieceToGuess {
     width: 50px;
     height: 50px;
     background-color: dodgerblue;
     margin: 2px;
     display: inline-block;
-    pointer-events:none;
+    pointer-events: none;
+}
+
+.guessedPiece {
+    width: 50px;
+    height: 50px;
+    background-color: forestgreen;
+    margin: 2px;
+    display: inline-block;
+    pointer-events: none;
+}
+
+.wrongPiece {
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    margin: 2px;
+    display: inline-block;
+    pointer-events: none;
+}
+
+.disable {
+    pointer-events: none;
+}
+
+.pieces {
+    width: 22%;
 }

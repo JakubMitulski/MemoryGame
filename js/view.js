@@ -1,68 +1,115 @@
 var view = (function () {
 
-    var getInitialNumberOfPieces = function () {
-            return 4;
-        },
-
-        renderPieces = function (pieces) {
+    var renderPieces = function (pieces) {
             var i,
-                button;
+                piece;
 
             clearPiecesWindow();
 
             for (i = 0; i < pieces.length; i++) {
-                button = document.createElement("button");
-                button.id = i;
-                button.setAttribute("onclick", "controller.takeAShot(" + i + ")");
+                piece = document.createElement("button");
+                piece.id = i;
+                piece.setAttribute("onclick", "controller.takeAShot(" + i + ")");
                 if (pieces[i].toGuess === true) {
-                    button.classList.add('pieceToGuess');
-
-                    // console.log("Piece to guess: " + i);
-                    // console.log("toGuess: " + pieces[i].toGuess);
-                    // console.log("wasGuessed: " + pieces[i].wasGuessed);
+                    piece.classList.add('pieceToGuess');
                 } else {
-                    button.classList.add('lockedPiece');
-
-                    // console.log("Regular piece: " + i);
-                    // console.log("toGuess: " + pieces[i].toGuess);
-                    // console.log("wasGuessed: " + pieces[i].wasGuessed);
+                    piece.classList.add('lockedPiece');
                 }
-                document.getElementById("pieces").appendChild(button);
+                document.getElementById("pieces").appendChild(piece);
 
-                setTimeout(unlockPiecesForClick, 1000);
+                setTimeout(preparePiecesForClick, getCustomHighlightTime());
             }
         },
 
         clearPiecesWindow = function () {
             var piece;
+
             while (document.getElementById("pieces").hasChildNodes()) {
                 piece = document.getElementById("pieces").firstChild;
                 document.getElementById("pieces").removeChild(piece);
             }
         },
 
-        highlightPieces = function (pieces) {
+        highlightPiecesToGuess = function (pieces) {
+            var i, buttons, pieces;
 
+            buttons = document.getElementById("pieces").children;
+
+            for (i = 0; i < pieces.length; i++) {
+                if (pieces[i].toGuess === true) {
+                    buttons[i].setAttribute("class", "pieceToGuess");
+                }
+            }
         },
 
-        unlockPiecesForClick = function (pieces) {
-            var i;
+        highlightShootPiece = function (index) {
+            var pieces;
+
             pieces = document.getElementById("pieces").children;
+            pieces[index].setAttribute("class", "guessedPiece");
+        },
+
+        highlightMissedPiece = function (index) {
+            var pieces;
+
+            pieces = document.getElementById("pieces").children;
+            pieces[index].setAttribute("class", "wrongPiece");
+        },
+
+        preparePiecesForClick = function () {
+            var i, pieces;
+
+            pieces = document.getElementById("pieces").children;
+
             for (i = 0; i < pieces.length; i++) {
-                pieces[i].setAttribute("class", "unlockedPiece");
+                pieces[i].setAttribute("class", "regularPiece");
             }
+        },
+
+        lockPiecesForClick = function () {
+            document.getElementById("pieces").classList.add("disable");
+        },
+
+        unlockPiecesForClick = function () {
+            document.getElementById("pieces").classList.remove("disable");
         },
 
         insertLevelMessage = function (message) {
             var messageLevel;
+
             messageLevel = document.getElementById("level");
             messageLevel.innerHTML = message;
+        },
+
+        getUserNumberOfPieces = function () {
+            return document.getElementById("userNumberOfPieces").value;
+        },
+
+        insertCurrentNumberOfPiecesToGuessMessage = function (numberOfPieces) {
+            var numberOfPiecesToGuess;
+
+            numberOfPiecesToGuess = document.getElementById("numberOfPiecesToGuess");
+            numberOfPiecesToGuess.innerHTML = numberOfPieces;
+        },
+
+        getCustomHighlightTime = function () {
+            var userInput = document.getElementById("userHighlightTime").value;
+            return 2000 / userInput;
         };
 
+
     return {
-        'getInitialNumberOfPieces': getInitialNumberOfPieces,
         'renderPieces': renderPieces,
         'clearPiecesWindow': clearPiecesWindow,
-        'insertLevelMessage': insertLevelMessage
+        'insertLevelMessage': insertLevelMessage,
+        'highlightShootPiece': highlightShootPiece,
+        'highlightMissedPiece': highlightMissedPiece,
+        'lockPiecesForClick': lockPiecesForClick,
+        'unlockPiecesForClick': unlockPiecesForClick,
+        'highlightPiecesToGuess': highlightPiecesToGuess,
+        'preparePiecesForClick': preparePiecesForClick,
+        'getUserNumberOfPieces': getUserNumberOfPieces,
+        'insertCurrentNumberOfPiecesToGuessMessage': insertCurrentNumberOfPiecesToGuessMessage,
+        'getCustomHighlightTime': getCustomHighlightTime
     }
 })();

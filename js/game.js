@@ -24,18 +24,21 @@ var game = (function () {
         producePieces = function () {
             var i;
             pieces = [];
+
             for (i = 0; i < currentNumberOfPieces; i++) {
                 pieces.push({});
                 pieces[i].toGuess = false;
                 pieces[i].wasGuessed = false;
             }
             pieces = piecesToGuess();
+
             return pieces;
         },
 
         piecesToGuess = function () {
             var i = 0,
                 randomNum;
+
             do {
                 randomNum = Math.floor((Math.random() * pieces.length));
                 if (pieces[randomNum].toGuess === false) {
@@ -43,6 +46,7 @@ var game = (function () {
                     i++;
                 }
             } while (i < (pieces.length / 2) - 1);
+
             return pieces;
         },
 
@@ -57,38 +61,28 @@ var game = (function () {
                 isSomethingLeft = false;
 
             for (i = 0; i < pieces.length; i++) {
-                console.log("---");
-                console.log("i: " + i);
-                console.log("toGuess: " + pieces[i].toGuess);
-                console.log("wasGuessed: " + pieces[i].wasGuessed);
-                console.log("---");
-
                 if (pieces[i].toGuess === true && pieces[i].wasGuessed === false) {
                     isSomethingLeft = true;
                 }
             }
-
-            console.log("isSomethingLeft: " + isSomethingLeft);
 
             return isSomethingLeft;
         },
 
         takeAShot = function (id) {
             var status;
-            console.log(" ");
-            console.log("Piece id: " + id);
-            console.log("toGuess: " + pieces[id].toGuess);
-            console.log("wasGuessed: " + pieces[id].wasGuessed);
 
             if (pieces[id].toGuess === false || pieces[id].wasGuessed === true) {
                 status = "gameover";
                 level = 1;
             } else if (pieces[id].toGuess === true) {
                 pieces[id].wasGuessed = true;
+                status = "shoot";
                 if (isSomethingLeftToShoot() === false) {
                     status = "nextlevel";
                 }
             }
+
             return status;
         },
 
@@ -96,11 +90,8 @@ var game = (function () {
             var config = {
                 numberOfPieces: ++currentNumberOfPieces
             };
-            level = ++level;
+            level++;
             startGame(config);
-
-            console.log("nextLevel: " + config.numberOfPieces);
-            console.log("currLevel: " + level);
         },
 
         getLevel = function () {
