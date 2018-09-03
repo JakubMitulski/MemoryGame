@@ -1,16 +1,28 @@
 "use strict";
 var controller = function () {
-    var startGame = function () {
-            var initialNumberOfPieces = view.getUserNumberOfPieces();
+    var initialNumberOfPieces = 4,
+
+        startGameWithOneMorePiece = function () {
+            initialNumberOfPieces++;
+            startGame();
+        },
+
+        startGameWithNumberOfPiecesFromInput = function () {
+            initialNumberOfPieces = view.getUserNumberOfPieces();
+            startGame();
+        },
+
+        startGame = function () {
+            var numberOfMistakes = view.getUserNumberOfMistakes();
 
             game.startGame({
-                numberOfPieces: initialNumberOfPieces
+                numberOfPieces: initialNumberOfPieces,
+                numberOfMistakes: numberOfMistakes
             });
 
             view.renderPieces(game.producePieces());
             view.insertLevelMessage("Current level: " + game.getLevel());
             view.insertCurrentNumberOfPiecesToGuessMessage("Amount of pieces to guess: " + game.getPiecesToGuess().length);
-
         },
 
         takeAShot = function (i) {
@@ -43,6 +55,15 @@ var controller = function () {
                     },
                     getCustomHighlightTime());
             }
+            if (status === "missedshot") {
+                view.lockPiecesForClick();
+                view.highlightMissedPiece(i);
+
+                setTimeout(function () {
+                        view.unlockPiecesForClick();
+                        },
+                    getCustomHighlightTime());
+            }
         },
 
         highlightPiecesToGuess = function () {
@@ -63,6 +84,8 @@ var controller = function () {
     return {
         'startGame': startGame,
         'takeAShot': takeAShot,
-        'highlightPiecesToGuess': highlightPiecesToGuess
+        'highlightPiecesToGuess': highlightPiecesToGuess,
+        'startGameWithOneMorePiece': startGameWithOneMorePiece,
+        'startGameWithNumberOfPiecesFromInput': startGameWithNumberOfPiecesFromInput
     }
 }();

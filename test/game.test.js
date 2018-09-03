@@ -2,7 +2,8 @@ describe('Game', function () {
     it('should have 4 pieces after game start', function () {
         var pieces,
             config = {
-                numberOfPieces: 4
+                numberOfPieces: 4,
+                numberOfMistakes: 0
             };
         game.startGame(config);
         pieces = game.getPieces();
@@ -12,7 +13,8 @@ describe('Game', function () {
     it('one pieces should be to guess after game start', function () {
         var piecesToGuess,
             config = {
-                numberOfPieces: 4
+                numberOfPieces: 4,
+                numberOfMistakes: 0
             };
         game.startGame(config);
         piecesToGuess = findPiecesToGuess(game.getPieces());
@@ -22,7 +24,8 @@ describe('Game', function () {
     it('should start game with configured number of pieces', function () {
         var pieces,
             config = {
-                numberOfPieces: 6
+                numberOfPieces: 6,
+                numberOfMistakes: 0
             };
         game.startGame(config);
         pieces = game.getPieces();
@@ -32,7 +35,8 @@ describe('Game', function () {
     it('should start game with 6 pieces overall and 2 pieces to guess', function () {
         var piecesToGuess,
             config = {
-                numberOfPieces: 6
+                numberOfPieces: 6,
+                numberOfMistakes: 0
             };
         game.startGame(config);
         piecesToGuess = findPiecesToGuess(game.getPieces());
@@ -42,7 +46,8 @@ describe('Game', function () {
     it('should start game with 12 pieces overall and 5 pieces to guess', function () {
         var piecesToGuess,
             config = {
-                numberOfPieces: 12
+                numberOfPieces: 12,
+                numberOfMistakes: 0
             };
         game.startGame(config);
         piecesToGuess = findPiecesToGuess(game.getPieces());
@@ -51,7 +56,8 @@ describe('Game', function () {
 
     it('should return false when there is possible shoot to make', function () {
         var config = {
-            numberOfPieces: 6
+            numberOfPieces: 6,
+            numberOfMistakes: 0
         };
         game.startGame(config);
         expect(game.isSomethingLeftToShoot()).toBe(true);
@@ -60,7 +66,8 @@ describe('Game', function () {
     it('should return a nextlevel status after successful shot', function () {
         var indexes,
             config = {
-                numberOfPieces: 4
+                numberOfPieces: 4,
+                numberOfMistakes: 0
             };
         game.startGame(config);
         indexes = findIndexesOfPiecesToGuess(game.getPieces());
@@ -72,7 +79,8 @@ describe('Game', function () {
             successfulShotIndex,
             testShotIndex,
             config = {
-                numberOfPieces: 6
+                numberOfPieces: 6,
+                numberOfMistakes: 0
             };
         game.startGame(config);
         indexes = findIndexesOfPiecesToGuess(game.getPieces());
@@ -96,7 +104,8 @@ describe('Game', function () {
             successfulShotIndex,
             testShotIndex,
             config = {
-                numberOfPieces: 6
+                numberOfPieces: 6,
+                numberOfMistakes: 0
             };
         game.startGame(config);
         indexes = findIndexesOfPiecesToGuess(game.getPieces());
@@ -112,12 +121,52 @@ describe('Game', function () {
 
     it('should return array of pieces to guess after getPiecesToGuess method call', function () {
         var config = {
-            numberOfPieces: 6
+            numberOfPieces: 6,
+            numberOfMistakes: 0
         };
         game.startGame(config);
         var piecesToGuess = game.getPiecesToGuess();
         expect(piecesToGuess.length).toBe(2);
         expect(piecesToGuess[0].toGuess).toBe(true);
+    });
+
+    it('should return a missedshot status after unsuccessful shot', function () {
+        var indexes,
+            successfulShotIndex,
+            testShotIndex,
+            config = {
+                numberOfPieces: 6,
+                numberOfMistakes: 1
+            };
+        game.startGame(config);
+        indexes = findIndexesOfPiecesToGuess(game.getPieces());
+        successfulShotIndex = indexes[0];
+        if (successfulShotIndex === 0) {
+            testShotIndex = 1;
+        } else {
+            testShotIndex = successfulShotIndex - 1;
+        }
+        expect(game.takeAShot(testShotIndex)).toBe("missedshot");
+    });
+
+    it('should return a gameover status after second unsuccessful shot', function () {
+        var indexes,
+            successfulShotIndex,
+            testShotIndex,
+            config = {
+                numberOfPieces: 6,
+                numberOfMistakes: 1
+            };
+        game.startGame(config);
+        indexes = findIndexesOfPiecesToGuess(game.getPieces());
+        successfulShotIndex = indexes[0];
+        if (successfulShotIndex === 0) {
+            testShotIndex = 1;
+        } else {
+            testShotIndex = successfulShotIndex - 1;
+        }
+        game.takeAShot(testShotIndex);
+        expect(game.takeAShot(testShotIndex)).toBe("gameover");
     });
 
     function findIndexesOfPiecesToGuess(pieces) {

@@ -96,6 +96,10 @@ var view = (function () {
         getCustomHighlightTime = function () {
             var userInput = document.getElementById("userHighlightTime").value;
             return 2000 / userInput;
+        },
+
+        getUserNumberOfMistakes = function () {
+            return document.getElementById("userNumberOfMistakes").value;
         };
 
 
@@ -111,6 +115,7 @@ var view = (function () {
         'preparePiecesForClick': preparePiecesForClick,
         'getUserNumberOfPieces': getUserNumberOfPieces,
         'insertCurrentNumberOfPiecesToGuessMessage': insertCurrentNumberOfPiecesToGuessMessage,
-        'getCustomHighlightTime': getCustomHighlightTime
+        'getCustomHighlightTime': getCustomHighlightTime,
+        'getUserNumberOfMistakes': getUserNumberOfMistakes
     }
 })();

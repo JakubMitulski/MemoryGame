@@ -4,12 +4,19 @@ var game = (function () {
     var currentNumberOfPieces,
         pieces = [],
         level = 1,
+        maxNumberOfMistakes = 0,
+        numberOfMistakes = 0,
 
         startGame = function (config) {
             if (config && config.numberOfPieces) {
                 currentNumberOfPieces = parseInt(config.numberOfPieces);
                 level = 1;
             }
+            if (config && config.numberOfMistakes) {
+                maxNumberOfMistakes = parseInt(config.numberOfMistakes);
+            }
+
+            numberOfMistakes = 0;
             producePieces();
         },
 
@@ -69,8 +76,15 @@ var game = (function () {
             var status;
 
             if (pieces[id].toGuess === false || pieces[id].wasGuessed === true) {
-                status = "gameover";
-                level = 1;
+                numberOfMistakes++;
+
+                if (numberOfMistakes > maxNumberOfMistakes) {
+                    status = "gameover";
+                    level = 1;
+                    numberOfMistakes = 0;
+                } else {
+                    status = "missedshot";
+                }
             } else if (pieces[id].toGuess === true) {
                 pieces[id].wasGuessed = true;
                 status = "shoot";
@@ -79,7 +93,6 @@ var game = (function () {
                     nextLevel();
                 }
             }
-
             return status;
         },
 

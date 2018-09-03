@@ -10,14 +10,17 @@
 <h1>MemoryGame</h1>
 
 <div id="content">
-    <button onclick="controller.startGame()">StartGame</button>
+    <button onclick="controller.startGameWithNumberOfPiecesFromInput()">StartGame</button>
     <button onclick="controller.highlightPiecesToGuess()">HighlightPieces</button>
+    <button onclick="controller.startGameWithOneMorePiece()">AddPiece</button>
     <br>
     <div>
         <p>Custom amount of pieces:</p>
         <input type="number" min="4" max="36" id="userNumberOfPieces" value="4"><br>
         <p>Custom highlight time level:</p>
-        <input type="number" min="1" max="10" id="userHighlightTime" value="3"><br><br>
+        <input type="number" min="1" max="10" id="userHighlightTime" value="3"><br>
+        <p>Custom amount of allowed mistakes:</p>
+        <input type="number" min="0" max="3" id="userNumberOfMistakes" value="0"><br><br>
         <span id="level"></span><br>
         <span id="numberOfPiecesToGuess"></span><br><br>
     </div>
