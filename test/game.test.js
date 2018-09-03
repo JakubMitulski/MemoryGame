@@ -5,6 +5,7 @@ describe('Game', function () {
                 numberOfPieces: 4,
                 numberOfMistakes: 0
             };
+        game.resetGame();
         game.startGame(config);
         pieces = game.getPieces();
         expect(pieces.length).toBe(4);
@@ -16,6 +17,7 @@ describe('Game', function () {
                 numberOfPieces: 4,
                 numberOfMistakes: 0
             };
+        game.resetGame();
         game.startGame(config);
         piecesToGuess = findPiecesToGuess(game.getPieces());
         expect(piecesToGuess.length).toBe(1);
@@ -27,6 +29,7 @@ describe('Game', function () {
                 numberOfPieces: 6,
                 numberOfMistakes: 0
             };
+        game.resetGame();
         game.startGame(config);
         pieces = game.getPieces();
         expect(pieces.length).toBe(6);
@@ -38,6 +41,7 @@ describe('Game', function () {
                 numberOfPieces: 6,
                 numberOfMistakes: 0
             };
+        game.resetGame();
         game.startGame(config);
         piecesToGuess = findPiecesToGuess(game.getPieces());
         expect(piecesToGuess.length).toBe(2);
@@ -49,6 +53,7 @@ describe('Game', function () {
                 numberOfPieces: 12,
                 numberOfMistakes: 0
             };
+        game.resetGame();
         game.startGame(config);
         piecesToGuess = findPiecesToGuess(game.getPieces());
         expect(piecesToGuess.length).toBe(5);
@@ -59,6 +64,7 @@ describe('Game', function () {
             numberOfPieces: 6,
             numberOfMistakes: 0
         };
+        game.resetGame();
         game.startGame(config);
         expect(game.isSomethingLeftToShoot()).toBe(true);
     });
@@ -69,6 +75,7 @@ describe('Game', function () {
                 numberOfPieces: 4,
                 numberOfMistakes: 0
             };
+        game.resetGame();
         game.startGame(config);
         indexes = findIndexesOfPiecesToGuess(game.getPieces());
         expect(game.takeAShot(indexes[0])).toBe("nextlevel");
@@ -82,6 +89,7 @@ describe('Game', function () {
                 numberOfPieces: 6,
                 numberOfMistakes: 0
             };
+        game.resetGame();
         game.startGame(config);
         indexes = findIndexesOfPiecesToGuess(game.getPieces());
         successfulShotIndex = indexes[0];
@@ -98,6 +106,7 @@ describe('Game', function () {
             numberOfPieces: 4,
             numberOfMistakes: 0
         };
+        game.resetGame();
         game.startGame(config);
         game.startGame();
         game.nextLevel();
@@ -112,6 +121,7 @@ describe('Game', function () {
                 numberOfPieces: 6,
                 numberOfMistakes: 0
             };
+        game.resetGame();
         game.startGame(config);
         indexes = findIndexesOfPiecesToGuess(game.getPieces());
         successfulShotIndex = indexes[0];
@@ -129,6 +139,7 @@ describe('Game', function () {
             numberOfPieces: 6,
             numberOfMistakes: 0
         };
+        game.resetGame();
         game.startGame(config);
         var piecesToGuess = game.getPiecesToGuess();
         expect(piecesToGuess.length).toBe(2);
@@ -143,6 +154,7 @@ describe('Game', function () {
                 numberOfPieces: 6,
                 numberOfMistakes: 1
             };
+        game.resetGame();
         game.startGame(config);
         indexes = findIndexesOfPiecesToGuess(game.getPieces());
         successfulShotIndex = indexes[0];
@@ -152,7 +164,6 @@ describe('Game', function () {
             testShotIndex = successfulShotIndex - 1;
         }
         expect(game.takeAShot(testShotIndex)).toBe("missedshot");
-        game.takeAShot(successfulShotIndex);
     });
 
     it('should return a gameover status after second unsuccessful shot', function () {
@@ -163,6 +174,7 @@ describe('Game', function () {
                 numberOfPieces: 6,
                 numberOfMistakes: 1
             };
+        game.resetGame();
         game.startGame(config);
         indexes = findIndexesOfPiecesToGuess(game.getPieces());
         successfulShotIndex = indexes[0];

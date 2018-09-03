@@ -110,6 +110,15 @@ var game = (function () {
 
         getShotPrecision = function () {
             return Math.round(((numberOfShots - numberOfMistakes) / numberOfShots) * 100);
+        },
+
+        resetGame = function () {
+            currentNumberOfPieces = 0;
+            pieces = [];
+            level = 1;
+            maxNumberOfMistakes = 0;
+            numberOfMistakes = 0;
+            numberOfShots = 0;
         };
 
     return {
@@ -122,6 +131,7 @@ var game = (function () {
         'nextLevel': nextLevel,
         'getPieces': getPieces,
         'getLevel': getLevel,
-        'getShotPrecision': getShotPrecision
+        'getShotPrecision': getShotPrecision,
+        'resetGame': resetGame
     }
 })();
