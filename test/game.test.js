@@ -1,14 +1,20 @@
 describe('Game', function () {
     it('should have 4 pieces after game start', function () {
-        var pieces;
-        game.startGame();
+        var pieces,
+            config = {
+                numberOfPieces: 4
+            };
+        game.startGame(config);
         pieces = game.getPieces();
         expect(pieces.length).toBe(4);
     });
 
     it('one pieces should be to guess after game start', function () {
-        var piecesToGuess;
-        game.startGame();
+        var piecesToGuess,
+            config = {
+                numberOfPieces: 4
+            };
+        game.startGame(config);
         piecesToGuess = findPiecesToGuess(game.getPieces());
         expect(piecesToGuess.length).toBe(1);
     });
@@ -44,13 +50,19 @@ describe('Game', function () {
     });
 
     it('should return false when there is possible shoot to make', function () {
-        game.startGame();
+        var config = {
+            numberOfPieces: 6
+        };
+        game.startGame(config);
         expect(game.isSomethingLeftToShoot()).toBe(true);
     });
 
     it('should return a nextlevel status after successful shot', function () {
-        var indexes;
-        game.startGame();
+        var indexes,
+            config = {
+                numberOfPieces: 4
+            };
+        game.startGame(config);
         indexes = findIndexesOfPiecesToGuess(game.getPieces());
         expect(game.takeAShot(indexes[0])).toBe("nextlevel");
     });
@@ -58,16 +70,54 @@ describe('Game', function () {
     it('should return a gameover status after unsuccessful shot', function () {
         var indexes,
             successfulShotIndex,
-            testShotIndex;
-        game.startGame();
+            testShotIndex,
+            config = {
+                numberOfPieces: 6
+            };
+        game.startGame(config);
         indexes = findIndexesOfPiecesToGuess(game.getPieces());
         successfulShotIndex = indexes[0];
-        if(successfulShotIndex === 0){
+        if (successfulShotIndex === 0) {
             testShotIndex = 1;
         } else {
             testShotIndex = successfulShotIndex - 1;
         }
         expect(game.takeAShot(testShotIndex)).toBe("gameover");
+    });
+
+    it('should increase game level after nextLevel method call', function () {
+        game.startGame();
+        game.nextLevel();
+        expect(game.getLevel()).toBe(2);
+    });
+
+    it('should set game level to 1 after missed shoot', function () {
+        var indexes,
+            successfulShotIndex,
+            testShotIndex,
+            config = {
+                numberOfPieces: 6
+            };
+        game.startGame(config);
+        indexes = findIndexesOfPiecesToGuess(game.getPieces());
+        successfulShotIndex = indexes[0];
+        if (successfulShotIndex === 0) {
+            testShotIndex = 1;
+        } else {
+            testShotIndex = successfulShotIndex - 1;
+        }
+        game.takeAShot(testShotIndex)
+        expect(game.getLevel()).toBe(1);
+    });
+
+    it('should return array of pieces to guess after getPiecesToGuess method call', function () {
+        var config = {
+            numberOfPieces: 6
+        };
+        game.startGame(config);
+        var piecesToGuess = game.getPiecesToGuess();
+        expect(piecesToGuess.length).toBe(2);
+        expect(piecesToGuess[0].toGuess).toBe(true);
     });
 
     function findIndexesOfPiecesToGuess(pieces) {

@@ -1,18 +1,14 @@
+"use strict";
 var game = (function () {
 
-    var initialNumberOfPieces = 4,
-        currentNumberOfPieces,
+    var currentNumberOfPieces,
         pieces = [],
         level = 1,
 
         startGame = function (config) {
             if (config && config.numberOfPieces) {
-                currentNumberOfPieces = config.numberOfPieces;
-                if (currentNumberOfPieces === 4) {
-                    level = 1;
-                }
-            } else {
-                currentNumberOfPieces = initialNumberOfPieces;
+                currentNumberOfPieces = parseInt(config.numberOfPieces);
+                level = 1;
             }
             producePieces();
         },
@@ -80,6 +76,7 @@ var game = (function () {
                 status = "shoot";
                 if (isSomethingLeftToShoot() === false) {
                     status = "nextlevel";
+                    nextLevel();
                 }
             }
 
@@ -87,11 +84,8 @@ var game = (function () {
         },
 
         nextLevel = function () {
-            var config = {
-                numberOfPieces: ++currentNumberOfPieces
-            };
             level++;
-            startGame(config);
+            currentNumberOfPieces++;
         },
 
         getLevel = function () {

@@ -1,3 +1,4 @@
+"use strict";
 var view = (function () {
 
     var renderPieces = function (pieces) {
@@ -31,7 +32,7 @@ var view = (function () {
         },
 
         highlightPiecesToGuess = function (pieces) {
-            var i, buttons, pieces;
+            var i, buttons;
 
             buttons = document.getElementById("pieces").children;
 

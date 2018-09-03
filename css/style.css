@@ -30,7 +30,6 @@
     background-color: forestgreen;
     margin: 2px;
     display: inline-block;
-    pointer-events: none;
 }
 
 .wrongPiece {

@@ -1,3 +1,4 @@
+"use strict";
 var controller = function () {
     var startGame = function () {
             var initialNumberOfPieces = view.getUserNumberOfPieces();
@@ -21,25 +22,24 @@ var controller = function () {
             if (status === "gameover") {
                 view.lockPiecesForClick();
                 view.highlightMissedPiece(i);
-                view.insertLevelMessage("Current level: " + game.getLevel());
-                view.insertCurrentNumberOfPiecesToGuessMessage("Amount of pieces to guess: " + game.getPiecesToGuess().length);
 
                 setTimeout(function () {
                         startGame();
                         view.unlockPiecesForClick();
+                        view.insertLevelMessage("Current level: " + game.getLevel());
+                        view.insertCurrentNumberOfPiecesToGuessMessage("Amount of pieces to guess: " + game.getPiecesToGuess().length);
                     },
                     getCustomHighlightTime());
             }
             if (status === "nextlevel") {
                 view.lockPiecesForClick();
                 view.highlightShootPiece(i);
-                view.insertLevelMessage("Current level: " + game.getLevel());
-                view.insertCurrentNumberOfPiecesToGuessMessage("Amount of pieces to guess: " + game.getPiecesToGuess().length);
 
                 setTimeout(function () {
-                        game.nextLevel();
                         view.unlockPiecesForClick();
                         view.renderPieces(game.producePieces());
+                        view.insertLevelMessage("Current level: " + game.getLevel());
+                        view.insertCurrentNumberOfPiecesToGuessMessage("Amount of pieces to guess: " + game.getPiecesToGuess().length);
                     },
                     getCustomHighlightTime());
             }
