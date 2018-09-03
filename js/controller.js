@@ -23,6 +23,7 @@ var controller = function () {
             view.renderPieces(game.producePieces());
             view.insertLevelMessage("Current level: " + game.getLevel());
             view.insertCurrentNumberOfPiecesToGuessMessage("Amount of pieces to guess: " + game.getPiecesToGuess().length);
+            view.insertShotPrecisionMessage("Shots precision: 0%");
         },
 
         takeAShot = function (i) {
@@ -30,6 +31,7 @@ var controller = function () {
 
             if (status === "shoot") {
                 view.highlightShootPiece(i);
+                view.insertShotPrecisionMessage("Shots precision: " + game.getShotPrecision() + "%")
             }
             if (status === "gameover") {
                 view.lockPiecesForClick();
@@ -46,6 +48,7 @@ var controller = function () {
             if (status === "nextlevel") {
                 view.lockPiecesForClick();
                 view.highlightShootPiece(i);
+                view.insertShotPrecisionMessage("Shots precision: " + game.getShotPrecision() + "%");
 
                 setTimeout(function () {
                         view.unlockPiecesForClick();
@@ -58,10 +61,11 @@ var controller = function () {
             if (status === "missedshot") {
                 view.lockPiecesForClick();
                 view.highlightMissedPiece(i);
+                view.insertShotPrecisionMessage("Shots precision: " + game.getShotPrecision() + "%");
 
                 setTimeout(function () {
                         view.unlockPiecesForClick();
-                        },
+                    },
                     getCustomHighlightTime());
             }
         },

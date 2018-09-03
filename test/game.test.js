@@ -94,6 +94,11 @@ describe('Game', function () {
     });
 
     it('should increase game level after nextLevel method call', function () {
+        var config = {
+            numberOfPieces: 4,
+            numberOfMistakes: 0
+        };
+        game.startGame(config);
         game.startGame();
         game.nextLevel();
         expect(game.getLevel()).toBe(2);
@@ -147,6 +152,7 @@ describe('Game', function () {
             testShotIndex = successfulShotIndex - 1;
         }
         expect(game.takeAShot(testShotIndex)).toBe("missedshot");
+        game.takeAShot(successfulShotIndex);
     });
 
     it('should return a gameover status after second unsuccessful shot', function () {
@@ -168,6 +174,19 @@ describe('Game', function () {
         game.takeAShot(testShotIndex);
         expect(game.takeAShot(testShotIndex)).toBe("gameover");
     });
+
+    it('should return shot precision value after shot', function () {
+        var indexes,
+            config = {
+                numberOfPieces: 4,
+                numberOfMistakes: 0
+            };
+        game.startGame(config);
+        indexes = findIndexesOfPiecesToGuess(game.getPieces());
+        game.takeAShot(indexes[0]);
+        expect(game.getShotPrecision()).toBe(100);
+    });
+
 
     function findIndexesOfPiecesToGuess(pieces) {
         var i,

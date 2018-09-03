@@ -6,6 +6,7 @@ var game = (function () {
         level = 1,
         maxNumberOfMistakes = 0,
         numberOfMistakes = 0,
+        numberOfShots = 0,
 
         startGame = function (config) {
             if (config && config.numberOfPieces) {
@@ -82,6 +83,7 @@ var game = (function () {
                     status = "gameover";
                     level = 1;
                     numberOfMistakes = 0;
+                    numberOfShots = 0;
                 } else {
                     status = "missedshot";
                 }
@@ -93,6 +95,7 @@ var game = (function () {
                     nextLevel();
                 }
             }
+            numberOfShots++;
             return status;
         },
 
@@ -103,6 +106,10 @@ var game = (function () {
 
         getLevel = function () {
             return level;
+        },
+
+        getShotPrecision = function () {
+            return Math.round(((numberOfShots - numberOfMistakes) / numberOfShots) * 100);
         };
 
     return {
@@ -114,6 +121,7 @@ var game = (function () {
         'isSomethingLeftToShoot': isSomethingLeftToShoot,
         'nextLevel': nextLevel,
         'getPieces': getPieces,
-        'getLevel': getLevel
+        'getLevel': getLevel,
+        'getShotPrecision': getShotPrecision
     }
 })();

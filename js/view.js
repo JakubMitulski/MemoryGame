@@ -100,8 +100,14 @@ var view = (function () {
 
         getUserNumberOfMistakes = function () {
             return document.getElementById("userNumberOfMistakes").value;
-        };
+        },
 
+        insertShotPrecisionMessage = function (message) {
+            var precisionMessage;
+
+            precisionMessage = document.getElementById("shotPrecision");
+            precisionMessage.innerHTML = message;
+        };
 
     return {
         'renderPieces': renderPieces,
@@ -116,6 +122,7 @@ var view = (function () {
         'getUserNumberOfPieces': getUserNumberOfPieces,
         'insertCurrentNumberOfPiecesToGuessMessage': insertCurrentNumberOfPiecesToGuessMessage,
         'getCustomHighlightTime': getCustomHighlightTime,
-        'getUserNumberOfMistakes': getUserNumberOfMistakes
+        'getUserNumberOfMistakes': getUserNumberOfMistakes,
+        'insertShotPrecisionMessage': insertShotPrecisionMessage
     }
 })();

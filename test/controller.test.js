@@ -11,12 +11,15 @@ describe('Game', function () {
         spyOn(view, 'insertLevelMessage');
         spyOn(game, 'getPiecesToGuess').and.returnValue([{}]);
         spyOn(view, 'insertCurrentNumberOfPiecesToGuessMessage');
+        spyOn(game, 'getShotPrecision').and.returnValue(0);
+        spyOn(view, 'insertShotPrecisionMessage');
 
         controller.startGame();
         expect(game.startGame).toHaveBeenCalledWith({numberOfPieces: 4, numberOfMistakes: 0});
         expect(view.renderPieces).toHaveBeenCalledWith(pieces);
         expect(view.insertLevelMessage).toHaveBeenCalledWith("Current level: " + 1);
         expect(view.insertCurrentNumberOfPiecesToGuessMessage).toHaveBeenCalledWith("Amount of pieces to guess: " + 1);
+        expect(view.insertShotPrecisionMessage).toHaveBeenCalledWith("Shots precision: 0%");
 
     });
 });
