@@ -1,3 +1,3 @@
 # MemoryGame
 
-To play game run init.html
+To play game run index.html
